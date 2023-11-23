@@ -2,7 +2,8 @@ require("utils_math")
 require("utils_love2d")
 
 function pixel_draw(x, y)
-    rectangle_draw(x, y, 1, 1)
+    local pixel = { x, y, 1, 1 }
+    rectangle_draw(pixel)
 end
 
 function circles_draw(circle)
@@ -45,9 +46,10 @@ function capsule_draw(rectangle)
         ranges =
             range2
     }
-
+    local rectangle2 = { center_common[1] - (1 - horizontal) * radius_common, center_common[2] -
+    horizontal * radius_common,
+        rectangle_width, rectangle_height }
     circles_draw(circle1)
     circles_draw(circle2)
-    rectangle_draw(center_common[1] - (1 - horizontal) * radius_common, center_common[2] - horizontal * radius_common,
-        rectangle_width, rectangle_height)
+    rectangle_draw(rectangle2)
 end
