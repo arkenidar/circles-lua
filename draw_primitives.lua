@@ -16,7 +16,7 @@ function circles_draw(circle)
     end
 end
 
-function rounded_draw(rectangle, radius)
+function rounded_draw_no_border(rectangle, radius)
     -- top
     circles_draw { center = { rectangle[1] + radius, rectangle[2] + radius }, radius = radius, ranges = { 1, 0, 1, 0 } }
     rectangle_draw { rectangle[1] + radius, rectangle[2], rectangle[3] - 2 * radius, radius + 1 }
@@ -32,4 +32,20 @@ end
 function capsule_draw(rectangle)
     local radius = math.min(rectangle[3], rectangle[4]) / 2
     rounded_draw(rectangle, radius)
+end
+
+function rounded_draw(rectangle, radius, border_color)
+    if border_color then
+        local inner_color = draw_color_get()
+        draw_color_set(border_color)
+        rounded_draw_no_border(rectangle, radius)
+        -- inner
+        radius = radius / 2
+        rectangle[1] = rectangle[1] + radius
+        rectangle[2] = rectangle[2] + radius
+        rectangle[3] = rectangle[3] - 2 * radius
+        rectangle[4] = rectangle[4] - 2 * radius
+        draw_color_set(inner_color)
+    end
+    rounded_draw_no_border(rectangle, radius)
 end

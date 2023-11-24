@@ -32,3 +32,12 @@ function rectangle_draw(rectangle)
     local x, y, w, h = rectangle[1], rectangle[2], rectangle[3], rectangle[4]
     love.graphics.rectangle("fill", x, y, w, h)
 end
+
+function draw_color_set(rgba)
+    love.graphics.setColor(rgba[1], rgba[2], rgba[3], rgba[4] or 1)
+end
+
+function draw_color_get()
+    local r, g, b, a = love.graphics.getColor()
+    return { r, g, b, a }
+end

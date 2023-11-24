@@ -25,3 +25,13 @@ function draw_primitives_test3()
     local rectangle = { x, y, width, height }
     rounded_draw(rectangle, radius)
 end
+
+function draw_primitives_test4()
+    local radius = 30
+    local x, y = 10, 10
+    local mx, my = pointer_position()
+    local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
+    local rectangle = { x, y, width, height }
+    local border_color = {1,1,1}
+    rounded_draw(rectangle, radius, border_color)
+end
