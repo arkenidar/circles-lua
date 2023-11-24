@@ -14,7 +14,9 @@ function draw_primitives_test2()
     local mx, my = pointer_position()
     local width, height = non_negative(mx - x), non_negative(my - y)
     local rectangle = { x, y, width, height }
-    capsule_draw(rectangle)
+    local border_color = { 1, 1, 1 }
+    local border_thickness = 20
+    capsule_draw(rectangle, border_color, border_thickness)
 end
 
 function draw_primitives_test3()
@@ -32,6 +34,7 @@ function draw_primitives_test4()
     local mx, my = pointer_position()
     local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
     local rectangle = { x, y, width, height }
-    local border_color = {1,1,1}
-    rounded_draw(rectangle, radius, border_color)
+    local border_color = { 1, 1, 1 }
+    local border_thickness = 20
+    rounded_draw(rectangle, radius, border_color, border_thickness)
 end
