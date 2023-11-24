@@ -16,3 +16,12 @@ function draw_primitives_test2()
     local rectangle = { x, y, width, height }
     capsule_draw(rectangle)
 end
+
+function draw_primitives_test3()
+    local radius = 30
+    local x, y = 10, 10
+    local mx, my = pointer_position()
+    local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
+    local rectangle = { x, y, width, height }
+    rounded_draw(rectangle, radius)
+end

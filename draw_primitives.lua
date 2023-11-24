@@ -53,3 +53,16 @@ function capsule_draw(rectangle)
     circles_draw(circle2)
     rectangle_draw(rectangle2)
 end
+
+function rounded_draw(rectangle, radius)
+    -- top
+    circles_draw { center = { rectangle[1] + radius, rectangle[2] + radius }, radius = radius, ranges = { 1, 0, 1, 0 } }
+    rectangle_draw { rectangle[1] + radius, rectangle[2], rectangle[3] - 2 * radius, radius + 1 }
+    circles_draw { center = { rectangle[1] + rectangle[3] - radius, rectangle[2] + radius }, radius = radius, ranges = { 0, 1, 1, 0 } }
+    -- middle
+    rectangle_draw { rectangle[1], rectangle[2] + radius, rectangle[3], rectangle[4] - 2 * radius }
+    -- bottom
+    circles_draw { center = { rectangle[1] + radius, rectangle[2] + rectangle[4] - radius }, radius = radius, ranges = { 1, 0, 0, 1 } }
+    rectangle_draw { rectangle[1] + radius, rectangle[2] + rectangle[4] - radius, rectangle[3] - 2 * radius, radius }
+    circles_draw { center = { rectangle[1] + rectangle[3] - radius, rectangle[2] + rectangle[4] - radius }, radius = radius, ranges = { 0, 1, 0, 1 } }
+end

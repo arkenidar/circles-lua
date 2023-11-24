@@ -11,5 +11,5 @@ end -- see docs of extension: tomblind.local-lua-debugger-vscode
 require("draw_primitives_testing")
 
 function display()
-    draw_primitives_test2()
+    draw_primitives_test3()
 end
