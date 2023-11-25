@@ -17,6 +17,9 @@ function circles_draw(circle)
 end
 
 function rounded_draw_no_border(rectangle, radius)
+    -- checks
+    if rectangle[3] <= 0 or rectangle[4] <= 0 then return end
+    radius = non_negative(radius)
     -- top
     circles_draw { center = { rectangle[1] + radius, rectangle[2] + radius }, radius = radius, ranges = { 1, 0, 1, 0 } }
     rectangle_draw { rectangle[1] + radius, rectangle[2], rectangle[3] - 2 * radius, radius + 1 }
