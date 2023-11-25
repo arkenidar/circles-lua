@@ -38,3 +38,14 @@ function draw_primitives_test4()
     local border_thickness = 20
     rounded_draw(rectangle, radius, border_color, border_thickness)
 end
+
+function draw_primitives_test5()
+    local radius = 0
+    local x, y = 10, 10
+    local mx, my = pointer_position()
+    local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
+    local rectangle = { x, y, width, height }
+    local border_color = { 1, 1, 1 }
+    local border_thickness = 20
+    rounded_draw(rectangle, radius, border_color, border_thickness)
+end

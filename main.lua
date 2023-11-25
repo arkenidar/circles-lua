@@ -10,9 +10,14 @@ end -- see docs of extension: tomblind.local-lua-debugger-vscode
 
 require("draw_primitives_testing")
 
-test_index = 4
+test_index = 5
 function display()
-    local tests = { draw_primitives_test1, draw_primitives_test2, draw_primitives_test3, draw_primitives_test4 }
+    local tests = {
+        draw_primitives_test1,
+        draw_primitives_test2,
+        draw_primitives_test3,
+        draw_primitives_test4,
+        draw_primitives_test5 }
 
     if pointer_click_check() then
         test_index = (((test_index - 1) + 1) % #tests) + 1
