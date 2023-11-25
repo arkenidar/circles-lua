@@ -1,43 +1,37 @@
-pointer_down = false
-pointer_click = false
+pointer = {}
 
-function pointer_down_check()
-    return love.mouse.isDown(1)
-end
-
-function pointer_click_check()
-    return pointer_click
-end
-
-function input_from_pointer()
-    if not pointer_down and pointer_down_check() then
-        pointer_click = true
-        pointer_down = true
-    else
-        pointer_click = false
-        pointer_down = pointer_down_check()
+function pointer.input(mouse)
+    -- position, x, y
+    local mx, my = mouse.getPosition()
+    pointer.position = { mx, my }
+    pointer.x = pointer.position[1]
+    pointer.y = pointer.position[2]
+    -- click and down
+    pointer.down_previously = pointer.down
+    pointer.down = mouse.isDown(1)
+    pointer.click = false
+    if pointer.down and not pointer.down_previously then
+        pointer.click = true
     end
 end
 
 function love.draw()
-    input_from_pointer()
+    pointer.input(love.mouse)
     display()
 end
 
-function pointer_position()
-    return love.mouse.getPosition()
-end
+graphics = love.graphics
 
 function rectangle_draw(rectangle)
     local x, y, w, h = rectangle[1], rectangle[2], rectangle[3], rectangle[4]
-    love.graphics.rectangle("fill", x, y, w, h)
+    graphics.rectangle("fill", x, y, w, h)
 end
 
 function draw_color_set(rgba)
-    love.graphics.setColor(rgba[1], rgba[2], rgba[3], rgba[4] or 1)
+    graphics.setColor(rgba[1], rgba[2], rgba[3], rgba[4] or 1)
 end
 
 function draw_color_get()
-    local r, g, b, a = love.graphics.getColor()
+    local r, g, b, a = graphics.getColor()
     return { r, g, b, a }
 end

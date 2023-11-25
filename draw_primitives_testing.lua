@@ -11,8 +11,7 @@ end
 
 function draw_primitives_test2()
     local x, y = 10, 10
-    local mx, my = pointer_position()
-    local width, height = non_negative(mx - x), non_negative(my - y)
+    local width, height = non_negative(pointer.x - x), non_negative(pointer.y - y)
     local rectangle = { x, y, width, height }
     local border_color = { 1, 1, 1 }
     local border_thickness = 20
@@ -22,8 +21,7 @@ end
 function draw_primitives_test3()
     local radius = 30
     local x, y = 10, 10
-    local mx, my = pointer_position()
-    local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
+    local width, height = math.max(2 * radius, pointer.x - x), math.max(2 * radius, pointer.y - y)
     local rectangle = { x, y, width, height }
     rounded_draw(rectangle, radius)
 end
@@ -31,8 +29,7 @@ end
 function draw_primitives_test4()
     local radius = 30
     local x, y = 10, 10
-    local mx, my = pointer_position()
-    local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
+    local width, height = math.max(2 * radius, pointer.x - x), math.max(2 * radius, pointer.y - y)
     local rectangle = { x, y, width, height }
     local border_color = { 1, 1, 1 }
     local border_thickness = 20
@@ -42,8 +39,7 @@ end
 function draw_primitives_test5()
     local radius = 0
     local x, y = 10, 10
-    local mx, my = pointer_position()
-    local width, height = math.max(2 * radius, mx - x), math.max(2 * radius, my - y)
+    local width, height = math.max(2 * radius, pointer.x - x), math.max(2 * radius, pointer.y - y)
     local rectangle = { x, y, width, height }
     local border_color = { 1, 1, 1 }
     local border_thickness = 20
