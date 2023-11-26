@@ -8,6 +8,7 @@ if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
 end -- see docs of extension: tomblind.local-lua-debugger-vscode
 
 require("utils_love2d")
+--require("patch") -- older love2d fix: https://replit.com/@dariocangialosi/love2d-rounded#main.lua
 require("draw_primitives_testing")
 
 test_index = 1
