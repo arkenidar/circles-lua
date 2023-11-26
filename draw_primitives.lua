@@ -15,7 +15,7 @@ function draw.circle(circle)
     end
 end
 
-function draw.rectangle_radius(rectangle, radius)
+local function draw_rectangle_radius(rectangle, radius)
     -- checks
     radius = non_negative(radius)
     if not radius or radius == 0 then return draw.rectangle_basic(rectangle) end
@@ -43,7 +43,7 @@ function draw.rectangle(rectangle, settings)
         -- border
         local color_restore = draw.color_get()
         draw.color_set(border.color)
-        draw.rectangle_radius(rectangle, radius)
+        draw_rectangle_radius(rectangle, radius)
         draw.color_set(color_restore)
         -- inner sizing
         radius = radius - border.thickness
@@ -54,7 +54,7 @@ function draw.rectangle(rectangle, settings)
         if rectangle[3] <= 0 or rectangle[4] <= 0 then return end
     end
     -- main
-    draw.rectangle_radius(rectangle, radius)
+    draw_rectangle_radius(rectangle, radius)
 end
 
 function draw.capsule(rectangle, border)
