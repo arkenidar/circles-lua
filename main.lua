@@ -47,14 +47,17 @@ function display2()
     local capsule = { rectangle[1], rectangle[2] + rectangle[4] + 30, rectangle[3], rectangle[4] }
     capsule.settings = { border = { color = { 1, 0, 0 }, thickness = 10 } }
     draw.capsule(capsule, capsule.settings.border)
+
+    draw.color_set({ 0.5, 0.5, 0.5 })
+    draw.rectangle_outset({ 100, 250, 90, 50 })
 end
 
-display_index = 1
+display_index = 2
 display_list = { display1, display2 }
 function display()
-    local button = { 10, 10, 60, 60 }
+    local button = { 10, 10, 40, 40 }
     draw.color_set { 0, 1, 0 }
-    draw.rectangle(button)
+    draw.rectangle_outset(button)
     if pointer.click and point_inside_rectangle(pointer.position, button) then
         pointer.click = false -- stop propagation of event
         display_index = (((display_index - 1) + 1) % #display_list) + 1

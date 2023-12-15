@@ -61,3 +61,17 @@ function draw.capsule(rectangle, border)
     local radius = math.min(rectangle[3], rectangle[4]) / 2
     draw.rectangle(rectangle, { radius = radius, border = border })
 end
+
+function draw.rectangle_outset(rectangle)
+    draw.rectangle_basic(rectangle)
+
+    local thickness = 3
+
+    draw.color_set({ 0.2, 0.2, 0.2 })
+    draw.rectangle_basic({ rectangle[1], rectangle[2] + rectangle[4] - thickness, rectangle[3], thickness })
+    draw.rectangle_basic({ rectangle[1] + rectangle[3] - thickness, rectangle[2], thickness, rectangle[4] })
+
+    draw.color_set({ 1, 1, 1 })
+    draw.rectangle_basic({ rectangle[1], rectangle[2], rectangle[3], thickness })
+    draw.rectangle_basic({ rectangle[1], rectangle[2], thickness, rectangle[4] })
+end
