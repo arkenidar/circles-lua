@@ -41,7 +41,7 @@ function display2()
     local x, y
 
     -- scrollable setup
-    x, y = 70, 10
+    x, y = 70, 50
     local rectangle_scrollable = { x, y, math.max(3 * square, pointer.x - x), math.max(2 * square, pointer.y - y) }
 
     -- back ground
@@ -61,7 +61,7 @@ function display2()
     end
 
     -- #1
-    local rectangle = { 80, 20, 200, 100 }
+    local rectangle = { 80, 50+10, 200, 100 }
     rectangle.settings = {
         radius = toggle and 30 or 0,
         border = { color = { 1, 0, 0 }, thickness = 10 }
@@ -75,7 +75,7 @@ function display2()
 
     -- #3
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
-    draw.rectangle_outset({ 100, 250, 90, 50 })
+    draw.rectangle_outset({ 100, 270, 90, 50 })
 
     -- content ending
 
@@ -140,7 +140,7 @@ end
 display_index = 2
 display_list = { display1, display2 }
 function display()
-    local button = { 10, 10, 40, 40 }
+    local button = { 10, 50, 40, 40 }
     draw.color_set { 0, 1, 0 }
     draw.rectangle_outset(button)
     if pointer.click and point_inside_rectangle(pointer.position, button) then
