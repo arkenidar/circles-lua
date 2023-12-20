@@ -22,6 +22,13 @@ function draw.color_get()
     return { r, g, b, a }
 end
 
+draw.image = graphics.draw
+
+images = {}
+function images.add(name)
+    images[name] = graphics.newImage("assets/" .. name .. ".png")
+end
+
 pointer = {}
 function pointer.input(mouse)
     -- position, x, y
