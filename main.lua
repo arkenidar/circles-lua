@@ -31,6 +31,11 @@ end
 
 local toggle = true
 
+images.add("arrow_up")
+images.add("arrow_down")
+images.add("arrow_left")
+images.add("arrow_right")
+
 function display2()
     -- click to toggle
     if pointer.click then
@@ -48,8 +53,52 @@ function display2()
     capsule.settings = { border = { color = { 1, 0, 0 }, thickness = 10 } }
     draw.capsule(capsule, capsule.settings.border)
 
-    draw.color_set({ 0.5, 0.5, 0.5 })
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
     draw.rectangle_outset({ 100, 250, 90, 50 })
+
+    local x, y
+    local square = 16
+
+    -- horizontal
+
+    local width = 400
+    local width_part = width / 3
+    x, y = 100, 320
+
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_outset({ x, y, square, square }) -- left
+    draw.image(images.arrow_left, x, y)
+
+    draw.color_set({ 243 / 255, 243 / 255, 243 / 255 })
+    draw.rectangle_basic({ x + square, y, width, square }) -- total
+
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_outset({ x + square, y, width_part, square }) -- part
+
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_outset({ x + square + width, y, square, square }) -- right
+    draw.image(images.arrow_right, x + square + width, y)
+
+    -- vertical
+
+    local height = 300
+    local height_part = 200
+    x = x + square + width + square
+    y = y - height - square
+
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_outset({ x, y, square, square }) -- up
+    draw.image(images.arrow_up, x, y)
+
+    draw.color_set({ 243 / 255, 243 / 255, 243 / 255 })
+    draw.rectangle_basic({ x, y + square, square, height }) -- total
+
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_outset({ x, y + square, square, height_part }) -- part
+
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_outset({ x, y + square + height, square, square }) -- down
+    draw.image(images.arrow_down, x, y + square + height)
 end
 
 display_index = 2
