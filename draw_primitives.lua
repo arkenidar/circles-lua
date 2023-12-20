@@ -65,13 +65,24 @@ end
 function draw.rectangle_outset(rectangle)
     draw.rectangle_basic(rectangle)
 
-    local thickness = 3
+    local thickness = 1
 
-    draw.color_set({ 0.2, 0.2, 0.2 })
+    draw.color_set({ 74 / 255, 73 / 255, 72 / 255 })
     draw.rectangle_basic({ rectangle[1], rectangle[2] + rectangle[4] - thickness, rectangle[3], thickness })
     draw.rectangle_basic({ rectangle[1] + rectangle[3] - thickness, rectangle[2], thickness, rectangle[4] })
 
-    draw.color_set({ 1, 1, 1 })
+    draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
+    draw.rectangle_basic({ rectangle[1], rectangle[2], rectangle[3], thickness })
+    draw.rectangle_basic({ rectangle[1], rectangle[2], thickness, rectangle[4] })
+
+    rectangle = { rectangle[1] + thickness, rectangle[2] + thickness, rectangle[3] - thickness * 2, rectangle[4] -
+    thickness * 2 }
+
+    draw.color_set({ 136 / 255, 134 / 255, 133 / 255 })
+    draw.rectangle_basic({ rectangle[1], rectangle[2] + rectangle[4] - thickness, rectangle[3], thickness })
+    draw.rectangle_basic({ rectangle[1] + rectangle[3] - thickness, rectangle[2], thickness, rectangle[4] })
+
+    draw.color_set({ 255 / 255, 255 / 255, 255 / 255 })
     draw.rectangle_basic({ rectangle[1], rectangle[2], rectangle[3], thickness })
     draw.rectangle_basic({ rectangle[1], rectangle[2], thickness, rectangle[4] })
 end
