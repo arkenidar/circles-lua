@@ -37,11 +37,30 @@ images.add("arrow_left")
 images.add("arrow_right")
 
 function display2()
+    local square = 16 -- like PNG images
+    local x, y
+
+    -- scrollable setup
+    x, y = 70, 10
+    local rectangle_scrollable = { x, y, math.max(3 * square, pointer.x - x), math.max(2 * square, pointer.y - y) }
+
+    -- back ground
+    draw.color_set({ 1, 1, 1 }) -- white
+    draw.rectangle_basic(rectangle_scrollable)
+
+    -- clipping rectangle setup
+    local xywh_clip = { rectangle_scrollable[1], rectangle_scrollable[2], rectangle_scrollable[3] - square,
+        rectangle_scrollable[4] - square }
+    draw.set_clip_rectangle(xywh_clip)
+
+    -- content beginning
+
     -- click to toggle
     if pointer.click then
         toggle = not toggle
     end
 
+    -- #1
     local rectangle = { 80, 20, 200, 100 }
     rectangle.settings = {
         radius = toggle and 30 or 0,
@@ -49,21 +68,40 @@ function display2()
     }
     draw.rectangle(rectangle, rectangle.settings)
 
+    -- #2
     local capsule = { rectangle[1], rectangle[2] + rectangle[4] + 30, rectangle[3], rectangle[4] }
     capsule.settings = { border = { color = { 1, 0, 0 }, thickness = 10 } }
     draw.capsule(capsule, capsule.settings.border)
 
+    -- #3
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
     draw.rectangle_outset({ 100, 250, 90, 50 })
 
-    local x, y
-    local square = 16
+    -- content ending
 
-    -- horizontal
+    draw.set_clip_rectangle() -- reset clipping area
 
-    local width = 400
-    local width_part = width / 3
-    x, y = 100, 320
+    -- draw both scroll-bars: horizontal and vertical
+
+    -- horizontal settings
+    local horizontal_percentage = 0.8
+    local horizontal_position = 0.0
+
+    -- vertical settings
+    local vertical_percentage = 0.1
+    local vertical_position = 1.0
+
+    -- calculate widths
+    local width = rectangle_scrollable[3] - 3 * square
+    local width_part = width * horizontal_percentage
+
+    -- calculate heights
+    local height = rectangle_scrollable[4] - 2 * square
+    local height_part = height * vertical_percentage
+
+    -- draw horizontal scrollbar
+
+    x, y = rectangle_scrollable[1], rectangle_scrollable[2] + rectangle_scrollable[4] - square
 
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
     draw.rectangle_outset({ x, y, square, square }) -- left
@@ -73,16 +111,14 @@ function display2()
     draw.rectangle_basic({ x + square, y, width, square }) -- total
 
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
-    draw.rectangle_outset({ x + square, y, width_part, square }) -- part
+    draw.rectangle_outset({ (x + square) + horizontal_position * (width - width_part), y, width_part, square }) -- part (movable)
 
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
     draw.rectangle_outset({ x + square + width, y, square, square }) -- right
     draw.image(images.arrow_right, x + square + width, y)
 
-    -- vertical
+    -- draw vertical scrollbar
 
-    local height = 300
-    local height_part = 200
     x = x + square + width + square
     y = y - height - square
 
@@ -94,7 +130,7 @@ function display2()
     draw.rectangle_basic({ x, y + square, square, height }) -- total
 
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
-    draw.rectangle_outset({ x, y + square, square, height_part }) -- part
+    draw.rectangle_outset({ x, (y + square) + vertical_position * (height - height_part), square, height_part }) -- part (movable)
 
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
     draw.rectangle_outset({ x, y + square + height, square, square }) -- down
