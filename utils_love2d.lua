@@ -29,6 +29,14 @@ function images.add(name)
     images[name] = graphics.newImage("assets/" .. name .. ".png")
 end
 
+function draw.set_clip_rectangle(xywh)
+    if xywh == nil then
+        graphics.setScissor()
+    else
+        graphics.setScissor(xywh[1], xywh[2], xywh[3], xywh[4])
+    end
+end
+
 pointer = {}
 function pointer.input(mouse)
     -- position, x, y
