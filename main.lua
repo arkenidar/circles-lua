@@ -41,21 +41,29 @@ function display2()
     local x, y
 
     -- scrollable setup
+
+    -- content sizing
+    local content_width = 250
+    local content_height = 300
+
     x, y = 70, 50
     local scrollable_width, scrollable_height
-    -- scrollable_width = math.max(3 * square, pointer.x - x)
-    -- scrollable_height = math.max(2 * square, pointer.y - y)
-    scrollable_height = 250
+    scrollable_width = math.max(3 * square, pointer.x - x)
+    scrollable_height = math.max(2 * square, pointer.y - y)
     scrollable_width = 300
-    local rectangle_scrollable = { x, y, scrollable_width,  scrollable_height}
+    scrollable_height = 250
+
+    local rectangle_scrollable = { x, y, scrollable_width, scrollable_height } -- external
 
     -- back ground
     draw.color_set({ 1, 1, 1 }) -- white
     draw.rectangle_basic(rectangle_scrollable)
 
-    -- clipping rectangle setup
-    local xywh_clip = { rectangle_scrollable[1], rectangle_scrollable[2], rectangle_scrollable[3] - square,
-        rectangle_scrollable[4] - square }
+    -- clipping rectangle setup (internal)
+    local scrollable_view_width = rectangle_scrollable[3] - square
+    local scrollable_view_height = rectangle_scrollable[4] - square
+    local xywh_clip = { rectangle_scrollable[1], rectangle_scrollable[2], scrollable_view_width,
+        scrollable_view_height }
     draw.set_clip_rectangle(xywh_clip)
 
     -- content beginning
@@ -88,12 +96,12 @@ function display2()
     -- draw both scroll-bars: horizontal and vertical
 
     -- horizontal settings
-    local horizontal_percentage = 0.8
-    local horizontal_position = 0.0
+    local horizontal_percentage = math.min(1, scrollable_view_width / content_width)
+    local horizontal_position = 0
 
     -- vertical settings
-    local vertical_percentage = 0.1
-    local vertical_position = 1.0
+    local vertical_percentage = math.min(1, scrollable_view_height / content_height)
+    local vertical_position = 0
 
     -- calculate widths
     local width = rectangle_scrollable[3] - 3 * square
