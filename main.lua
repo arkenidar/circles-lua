@@ -42,7 +42,12 @@ function display2()
 
     -- scrollable setup
     x, y = 70, 50
-    local rectangle_scrollable = { x, y, math.max(3 * square, pointer.x - x), math.max(2 * square, pointer.y - y) }
+    local scrollable_width, scrollable_height
+    -- scrollable_width = math.max(3 * square, pointer.x - x)
+    -- scrollable_height = math.max(2 * square, pointer.y - y)
+    scrollable_height = 250
+    scrollable_width = 300
+    local rectangle_scrollable = { x, y, scrollable_width,  scrollable_height}
 
     -- back ground
     draw.color_set({ 1, 1, 1 }) -- white
