@@ -55,13 +55,12 @@ function display2()
 
     -- content beginning
 
+    -- #1
+    local rectangle = { 80, 50 + 10, 200, 100 }
     -- click to toggle
-    if pointer.click then
+    if pointer.click and point_inside_rectangle(pointer.position, rectangle) then
         toggle = not toggle
     end
-
-    -- #1
-    local rectangle = { 80, 50+10, 200, 100 }
     rectangle.settings = {
         radius = toggle and 30 or 0,
         border = { color = { 1, 0, 0 }, thickness = 10 }
