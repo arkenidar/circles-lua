@@ -62,9 +62,10 @@ function display2()
     -- clipping rectangle setup (internal)
     local scrollable_view_width = rectangle_scrollable[3] - square
     local scrollable_view_height = rectangle_scrollable[4] - square
-    local xywh_clip = { rectangle_scrollable[1], rectangle_scrollable[2], scrollable_view_width,
+    local clip_rectangle = { rectangle_scrollable[1], rectangle_scrollable[2],
+        scrollable_view_width,
         scrollable_view_height }
-    draw.set_clip_rectangle(xywh_clip)
+    draw.set_clip_rectangle(clip_rectangle)
 
     -- calculate to draw both scroll-bars: horizontal and vertical
 
@@ -74,14 +75,39 @@ function display2()
 
     -- vertical settings
     local vertical_percentage = math.min(1, scrollable_view_height / content_height)
-    local vertical_position = 0
+    -- position will be wired to scroll-bars (WIP work in progress)
+    local vertical_position = 1 -- try 0 or 0.5 or 1 also (feature DEMO / TEST cases)
 
-    -- content beginning
+    local camera = {}           -- camera settings
+    camera.x = -horizontal_position * math.max(0, content_width - scrollable_view_width)
+    camera.y = -vertical_position * math.max(0, content_height - scrollable_view_height)
+
+    -- begin viewport transform (camera viewport)
+    graphics.push()                        -- transformations stack, push operation
+    graphics.translate(camera.x, camera.y) -- 2D translation transform
+
+    -- adjust pointer position coordinates (before "pointer adjust")
+    local pointer_previous_position = pointer.position
+
+    -- "pointer adjust": adjust pointer to transform (before "content beginning").
+    -- this is according to graphics.translate(camera.x, camera.y)
+    pointer.x = pointer.x - camera.x
+    pointer.y = pointer.y - camera.y
+    pointer.position = { pointer.x, pointer.y }
+
+    -- boolean pre-condition e.g. for :
+    -- verify pointer click in *clipped* rectangle then (etcetera)
+    -- if pointer.click and in_clip and point_inside_rectangle(pointer.position, rectangle) then
+    -- TEST it by trying to click e.g. a rectangle outside the clipping area (partially outside?)
+    -- this pre-condition should be applied to prevent such erroneous "clicks outside the viewport"
+    local in_clip = point_inside_rectangle(pointer_previous_position, clip_rectangle)
+
+    -- "content beginning"
 
     -- #1
     local rectangle = { 80, 50 + 10, 200, 100 }
-    -- click to toggle
-    if pointer.click and point_inside_rectangle(pointer.position, rectangle) then
+    -- click to toggle (in_clip pre-condition is applied)
+    if pointer.click and in_clip and point_inside_rectangle(pointer.position, rectangle) then
         toggle = not toggle
     end
     rectangle.settings = {
@@ -100,6 +126,17 @@ function display2()
     draw.rectangle_outset({ 100, 270, 90, 50 })
 
     -- content ending
+
+    -- end camera (end 2D viewport transformations)
+
+    -- transformations stack, pop operation
+    graphics.pop() -- pop() resets 2D viewport transformations
+
+    -- adjust pointer position coordinates (after, reset)
+    -- ... according to graphics.pop() transformations reset
+    pointer.x = pointer_previous_position[1]
+    pointer.y = pointer_previous_position[2]
+    pointer.point_position = { pointer.x, pointer.y }
 
     draw.set_clip_rectangle() -- reset clipping area
 
