@@ -66,6 +66,16 @@ function display2()
         scrollable_view_height }
     draw.set_clip_rectangle(xywh_clip)
 
+    -- calculate to draw both scroll-bars: horizontal and vertical
+
+    -- horizontal settings
+    local horizontal_percentage = math.min(1, scrollable_view_width / content_width)
+    local horizontal_position = 0
+
+    -- vertical settings
+    local vertical_percentage = math.min(1, scrollable_view_height / content_height)
+    local vertical_position = 0
+
     -- content beginning
 
     -- #1
@@ -94,14 +104,6 @@ function display2()
     draw.set_clip_rectangle() -- reset clipping area
 
     -- draw both scroll-bars: horizontal and vertical
-
-    -- horizontal settings
-    local horizontal_percentage = math.min(1, scrollable_view_width / content_width)
-    local horizontal_position = 0
-
-    -- vertical settings
-    local vertical_percentage = math.min(1, scrollable_view_height / content_height)
-    local vertical_position = 0
 
     -- calculate widths
     local width = rectangle_scrollable[3] - 3 * square
