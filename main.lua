@@ -36,6 +36,9 @@ images.add("arrow_down")
 images.add("arrow_left")
 images.add("arrow_right")
 
+-- position will be wired to scroll-bars (WIP work in progress)
+local vertical_position = 0.5 -- try 0 or 0.5 or 1 also (feature DEMO / TEST cases)
+
 function display2()
     local square = 16 -- like PNG images
     local x, y
@@ -75,10 +78,8 @@ function display2()
 
     -- vertical settings
     local vertical_percentage = math.min(1, scrollable_view_height / content_height)
-    -- position will be wired to scroll-bars (WIP work in progress)
-    local vertical_position = 1 -- try 0 or 0.5 or 1 also (feature DEMO / TEST cases)
 
-    local camera = {}           -- camera settings
+    local camera = {} -- camera settings
     camera.x = -horizontal_position * math.max(0, content_width - scrollable_view_width)
     camera.y = -vertical_position * math.max(0, content_height - scrollable_view_height)
 
@@ -178,7 +179,12 @@ function display2()
     draw.image(images.arrow_up, x, y)
 
     draw.color_set({ 243 / 255, 243 / 255, 243 / 255 })
-    draw.rectangle_basic({ x, y + square, square, height }) -- total
+    local vertical_box = { x, y + square, square, height }
+    draw.rectangle_basic(vertical_box) -- total
+    -- vertical_position update
+    if pointer.down and point_inside_rectangle(pointer_previous_position, vertical_box) then
+        vertical_position = (pointer_previous_position[2] - vertical_box[2]) / vertical_box[4]
+    end
 
     draw.color_set({ 230 / 255, 229 / 255, 228 / 255 })
     draw.rectangle_outset({ x, (y + square) + vertical_position * (height - height_part), square, height_part }) -- part (movable)
