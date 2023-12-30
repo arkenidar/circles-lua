@@ -70,6 +70,14 @@ function display2()
         scrollable_view_height }
     draw.set_clip_rectangle(clip_rectangle)
 
+    -- press-to-scroll
+    if pointer.down and point_inside_rectangle(pointer.position, clip_rectangle) then
+        local delta_y = (pointer.position[2] - (clip_rectangle[2] + clip_rectangle[4] / 2)) / (clip_rectangle[4] / 2)
+        vertical_position = vertical_position + delta_y / 10
+        vertical_position = math.min(1, vertical_position)
+        vertical_position = math.max(0, vertical_position)
+    end
+
     -- calculate to draw both scroll-bars: horizontal and vertical
 
     -- horizontal settings
